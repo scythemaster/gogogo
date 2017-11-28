@@ -53,14 +53,20 @@ class GOBoard extends Pane {
             vertical_t[i] = new Translate(0, 0);
         }
         for (int i = 0; i < 7; i++) {
-            horizontal[i] = new Line(50, 50, 650, 50);
+            horizontal[i] = new Line();
+            horizontal[i].setStartX(0);
+            horizontal[i].setStartY(0);
+            horizontal[i].setEndY(0);
             horizontal[i].setStroke(Color.BLACK);
             horizontal[i].getTransforms().add(horizontal_t[i]);
             getChildren().add(horizontal[i]);
         }
 
         for (int i = 0; i < 7; i++) {
-            vertical[i] = new Line(50, 50, 50, 650);
+            vertical[i] = new Line();
+            vertical[i].setStartX(0);
+            vertical[i].setStartY(0);
+            vertical[i].setEndX(0);
             vertical[i].setStroke(Color.BLACK);
             vertical[i].getTransforms().add(vertical_t[i]);
             getChildren().add(vertical[i]);
@@ -124,8 +130,14 @@ class GOBoard extends Pane {
         background.setWidth(width);
         background.setHeight(height);
         for (int i = 0; i < 7; i++) {
-            horizontal[i].setEndX(width);
-            vertical[i].setEndY(height);
+            horizontal[i].setStartX(cell_width / 2);
+            horizontal[i].setStartY(cell_height / 2);
+            vertical[i].setStartX(cell_width / 2);
+            vertical[i].setStartY(cell_height / 2);
+            horizontal[i].setEndX(width - (cell_width / 2));
+            horizontal[i].setEndY(cell_height / 2);
+            vertical[i].setEndY(height - (cell_height / 2));
+            vertical[i].setEndX(cell_width / 2);
             horizontal_t[i].setY(i * cell_height);
             vertical_t[i].setX(i * cell_width);
         }
