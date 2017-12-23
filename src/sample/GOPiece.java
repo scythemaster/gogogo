@@ -12,6 +12,8 @@ import javafx.scene.transform.Translate;
 class GOPiece extends Group {
 
     private int player;		// the player that this piece belongs to
+    private boolean liberty_player1;
+    private boolean liberty_player2;
     private Ellipse piece;	// ellipse representing the player's piece
     private Translate t;	// translation for the player piece
 
@@ -23,6 +25,8 @@ class GOPiece extends Group {
         getChildren().addAll(piece);
         piece.getTransforms().add(t);
         piece.setVisible(false);
+        liberty_player1 = true;
+        liberty_player2 = true;
         if (player == 1) {
             piece.setVisible(true);
             piece.setFill(Color.WHITE);
@@ -82,8 +86,23 @@ class GOPiece extends Group {
         }
     }
 
+    public void setLiberty_player(final int player){
+        if(player == 1)
+            liberty_player1 = false;
+        if(player == 2)
+            liberty_player2 = false;
+    }
+
     // returns the type of this piece
     public int getPiece() {
         return player;
+    }
+
+    public boolean isLiberty_player1(){
+        return liberty_player1;
+    }
+
+    public boolean isLiberty_player2() {
+        return liberty_player2;
     }
 }

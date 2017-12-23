@@ -10,17 +10,17 @@ import javafx.scene.input.KeyCode;
 
 class GOControl extends Control {
 
-    private GOBoard rb_board;
+    private GOBoard goboard;
 
     // constructor for the class
     public GOControl() {
         setSkin(new GOControlSkin(this));
-        rb_board = new GOBoard();
-        getChildren().add(rb_board);
-        setOnMouseClicked(event -> rb_board.placePiece(event.getX(), event.getY()));
+        goboard = new GOBoard();
+        getChildren().add(goboard);
+        setOnMouseClicked(event -> goboard.placePiece(event.getX(), event.getY()));
         setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.SPACE)
-                rb_board.resetGame();
+                goboard.resetGame();
         });
     }
 
@@ -28,6 +28,6 @@ class GOControl extends Control {
     @Override
     public void resize(double width, double height) {
         super.resize(width, height);
-        rb_board.resize(width, height);
+        goboard.resize(width, height);
     }
 }
