@@ -91,26 +91,20 @@ class   GOBoard extends Pane {
         if(render[cellx][celly].getPiece() != 0)
             return;
 
-        // determine what pieces surround the current piece. if there is no opposing
-        // pieces then a valid move cannot be made.
-        if (!checkOpposingPieces(cellx, celly)){
-            return;
-        }
-        // see if a reverse can be made in any direction if none can be made then return
-        if(!determineReverse(cellx, celly))
-            return;
-
-        // at this point we have done all the checks and they have passed so now we can place
-        // the piece and perform the reversing also check if the game has ended
-        // if we get to this point then a successful move has been made so swap the
-        // players and update the scores
+        if(current_player == 1)
+            if(!render[cellx][celly].isLiberty_player1())
+                return;
+        if(current_player == 2)
+            if(!render[cellx][celly].isLiberty_player2())
+                return;
+        render[cellx][celly].setPiece(current_player);
+        checkBoard();
         swapPlayers();
         updateScores();
         //determineEndGame();
 
         // print out some information
         System.out.println("placed at: " + cellx + ", " + celly);
-        System.out.println("White: " + player1_score + " Black: " + player2_score);
         if(current_player == 1)
             System.out.println("current player is White");
         else
@@ -157,7 +151,10 @@ class   GOBoard extends Pane {
         }
         in_play = true;
 
-        render[3][3].setPiece(2);
+        render[2][3].setPiece(2);
+        render[4][3].setPiece(2);
+        render[3][4].setPiece(2);
+
 
         current_player = 2;
         opposing = 1;
@@ -224,30 +221,63 @@ class   GOBoard extends Pane {
         return false;
     }
 
-    // private method to reverse a chain
-    private void reverseChain(final int x, final int y, final int dx, final int dy) {
+    public void checkBoard(){
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                capture(i, j);
+                setLiberty(i, j);
+            }
+        }
+    }
+    //GameLogic
+    public void capture(int cellx, int celly){
+        int opposing_pieces = 0;
+        int opponent = 1;
+        if (render[cellx][celly].getPiece() == 1)
+            opponent = 2;
+        if((cellx + 1) < 7){
+            if (render[cellx + 1][celly].getPiece() == opponent)
+                opposing_pieces ++;
+        }
+        if((cellx - 1) >= 0){
+            if (render[cellx - 1][celly].getPiece() == opponent)
+                opposing_pieces ++;
+        }
+        if((celly + 1) < 7){
+            if (render[cellx][celly + 1].getPiece() == opponent)
+                opposing_pieces ++;
+        }
+        if((celly - 1) >= 0){
+            if (render[cellx][celly - 1].getPiece() == opponent)
+                opposing_pieces ++;
+        }
+        if (opposing_pieces == 4)
+            render[cellx][celly].setPiece(0);
     }
 
-    // private method for getting a piece on the board. this will return the board
-    // value unless we access an index that doesnt exist. this is to make the code
-    // for determing reverse chains much easier
-    private int getPiece(final int x, final int y) {
-        if (x < 0 || x > 7 || y < 0 || y > 7)
-            return -1;
-        return render[x][y].getPiece();
-    }
+    public void setLiberty(int cellx, int celly){
+        int opposing_pieces = 0;
+        int opponent = 1;
+        if (render[cellx][celly].getPiece() == 1)
+            opponent = 2;
+        if((cellx + 1) < 7){
+            if (render[cellx + 1][celly].getPiece() == opponent)
+                opposing_pieces ++;
+        }
+        if((cellx - 1) >= 0){
+            if (render[cellx - 1][celly].getPiece() == opponent)
+                opposing_pieces ++;
+        }
+        if((celly + 1) < 7){
+            if (render[cellx][celly + 1].getPiece() == opponent)
+                opposing_pieces ++;
+        }
+        if((celly - 1) >= 0){
+            if (render[cellx][celly - 1].getPiece() == opponent)
+                opposing_pieces ++;
+        }
 
-    // private method that will determine if the end of the game has been reached
-    private void determineEndGame() {
-    }
-
-    // private method to determine if a player has a move available
-    private boolean canMove() {
-        return false;
-    }
-
-    // private method that determines who won the game
-    private void determineWinner() {
-
+        if (opposing_pieces >= 3)
+            render[cellx][celly].setLiberty_player(render[cellx][celly].getPiece());
     }
 }
