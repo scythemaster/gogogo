@@ -5,10 +5,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.transform.Translate;
 
-/**
- * Created by guill on 12/11/2017.
- */
-
 class GOPiece extends Group {
 
     private int player;		// the player that this piece belongs to
