@@ -6,11 +6,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Translate;
 
-/**
- * Created by guill on 12/11/2017.
- */
-
-class GOBoard extends Pane {
+class   GOBoard extends Pane {
 
     private Rectangle background;
     // arrays for the lines that makeup the horizontal and vertical grid lines
@@ -183,6 +179,30 @@ class GOBoard extends Pane {
 
     // private method for updating the player scores
     private void updateScores() {
+    }
+
+    protected int getScorePlayer1() {
+    return player1_score;
+    }
+
+    protected int getScorePlayer2() {
+        return player2_score;
+    }
+
+    protected int getTerritoryPlayer1() {
+        return player1_score;
+    }
+
+    protected int getTerritoryPlayer2() {
+        return player2_score;
+    }
+
+    protected int getCurrent_player() {
+        return current_player;
+    }
+
+    protected void setCurrent_player(int currentPlayer) {
+       current_player = currentPlayer;
     }
 
     // private method for determining which pieces surround x,y will update the

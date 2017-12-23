@@ -1,27 +1,30 @@
-package sample;/**
- * Created by guill on 21/11/2017.
- */
+package sample;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class GO extends Application {
 
-    private StackPane sp_mainlayout;
     private GOControl Go;
+    private GoControlPanel controlPanel;
+    private BorderPane bp_layout;
+    private GOBoard goBoard;
 
     public void init(){
-        sp_mainlayout = new StackPane();
+        bp_layout = new BorderPane();
         Go = new GOControl();
-        sp_mainlayout.getChildren().add(Go);
+        goBoard = new GOBoard();
+        controlPanel = new GoControlPanel(goBoard);
+        bp_layout.setCenter(Go);
+        bp_layout.setRight(controlPanel);
     }
 
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("GO !!! GO !!! GO !!!");
-        primaryStage.setScene(new Scene(sp_mainlayout, 700, 700));
+        primaryStage.setScene(new Scene(bp_layout, 1000, 700));
         primaryStage.show();
     }
 
